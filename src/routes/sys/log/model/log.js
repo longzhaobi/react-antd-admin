@@ -1,27 +1,21 @@
-import * as service from '../service/role';
+import * as service from '../service/log';
 
 import {message} from 'antd';
 export default {
-  namespace: 'role',
+  namespace: 'log',
   state: {
     data: [],
     total: 0,
     current: 0,
     size:20,
     selectedRowKeys:[],
-    keyword:null,
-
-    colsData:[],
-    treeData:[],
-    authData:[],
-    treePid:1,
-    roleId:0
+    keyword:null
 
   },
   subscriptions: {
     setup({ dispatch, history }) {
       return history.listen(({ pathname, query }) => {
-        if (pathname === '/sys/role') {
+        if (pathname === '/sys/log') {
           dispatch({ type: 'fetch', payload: {current:1, size:20, ...query}});
         }
       });
@@ -67,7 +61,7 @@ export default {
       } else {
         data = yield call(service.remove, payload.id);
       }
-      yield put({ type: 'app/result',payload:{data, namespace:'role'} });
+      yield put({ type: 'app/result',payload:{data, namespace:'log'} });
     },
     *update({ payload:params, callback }, { call, put }) {
       callback(yield call(service.update, params));
@@ -75,34 +69,8 @@ export default {
     *create({payload:params, callback}, { call, put }) {
       callback(yield call(service.create, params));
     },
-    *fetchAuth({ payload, callback }, { call, put, select}) {
-      const resource = yield call(service.fetchResources);//获取资源
-      const columns = yield call(service.fetchColumns);//获取权限表头
-      if(resource && columns) {
-        yield put({
-          type: 'fetchAuthList',
-          payload: {...payload, treeData:resource.data, colsData:columns.data},
-          callback
-        });
-      }
-    },
-    *fetchAuthList({payload, callback}, {call, put}) {
-      const {roleId, pid, treeData, colsData} = payload;
-      const data = yield call(service.queryAuth, {roleId, pid});
-      if(data) {
-        const authData = data.data;
-        if(treeData && colsData) {
-          callback(treeData, colsData, authData);
-        } else {
-          callback(authData);
-        }
-      }
-    },
-    *doAuth({ payload, callback }, { call, put }) {
-      callback(yield call(service.doAuth, payload));
-    },
     *reload(action, { put, select }) {
-      const current = yield select(state => state.role.current);
+      const current = yield select(state => state.log.current);
       yield put({ type: 'fetch', payload: { current } });
     }
 

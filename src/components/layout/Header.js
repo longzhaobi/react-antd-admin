@@ -7,25 +7,18 @@ const Option = Select.Option;
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
-function Header({ location,dispatch }) {
-  let user = localStorage.getItem('current_user');
+function Header({ location,dispatch, user }) {
   function logout() {
     Modal.confirm({
       title: '确定退出吗？',
       onOk() {
         dispatch({
-          type:'auth/logout'
+          type:'app/logout'
         });
       },
       okText: '确定',
       cancelText: '取消',
     });
-  }
-  function handleChange(value) {
-    dispatch({
-      type:'system/changeDataSource',
-      payload:value
-    })
   }
   return (
     <div className={styles.normal}>
@@ -34,7 +27,7 @@ function Header({ location,dispatch }) {
         <a className={styles.item}>数据控制台</a>
       </div>
       <div className={styles.right}>
-        <a onClick={logout} className={styles.logout}><Icon style={{marginTop:17}} type="user" />欢迎您-{user == null ? "" : JSON.parse(user).username}</a>
+        <a onClick={logout} className={styles.logout}><Icon style={{marginTop:17}} type="user" />欢迎您-{user.username}</a>
       </div>
     </div>
   );

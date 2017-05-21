@@ -8,7 +8,8 @@ export default {
     subMenu:[],
     menu:[],
     menuStyle:'max',
-
+    user:{},
+    permission:[],
     msg:null,
 
     //循环删除时，如果为true，则取消删除
@@ -85,6 +86,19 @@ export default {
         }
         yield put({ type: `${namespace}/reload` });
       }
+    },
+    *logout({payload}, {put, select, call}) {
+      const data = yield call(service.logout);
+      yield put(routerRedux.push('/login'));
+    },
+    *current({payload}, {call,put}) {
+      const data = yield call(service.current)
+      if(data) {
+        yield put({
+          type: 'setCurrentUser',
+          payload: data.data
+        });
+      }
     }
   },
   reducers: {
@@ -99,6 +113,9 @@ export default {
     },
     changeMsg(state, action) {
       return {...state, msg:action.payload};
+    },
+    setCurrentUser(state, action) {
+      return {...state, user: action.payload}
     }
   }
 };

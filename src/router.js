@@ -29,15 +29,6 @@ export default function({ history, app }) {
           });
         },
       },{
-        path: '/upload',
-        breadcrumbName:"附件上传",
-        getComponent(nextState, cb) {
-          require.ensure([], (require) => {
-            registerModel(app, require('./routes/upload/model/upload'));
-            cb(null, require('./routes/upload/Upload'));
-          });
-        },
-      },{
         breadcrumbName:"博客管理",
         path:"/blog",
         getComponent(nextState, cb) {
@@ -134,6 +125,15 @@ export default function({ history, app }) {
             require.ensure([], require => {
               registerModel(app, require('./routes/sys/table/model/table'));
               cb(null, require('./routes/sys/table/Table'));
+            });
+          },
+        },{
+          breadcrumbName:"系统日志",
+          path:"/sys/log",
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./routes/sys/log/model/log'));
+              cb(null, require('./routes/sys/log/Log'));
             });
           },
         }]

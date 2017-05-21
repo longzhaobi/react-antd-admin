@@ -28,9 +28,7 @@ class AuthModal extends Component {
     //每次选择，把auths清0
     this.state.auths = [];
     const {record, namespace, dispatch} = this.props;
-    console.log(selectedKeys);
     const pid = selectedKeys.join("");
-    console.log(pid);
     const roleId = record.id_;
     if(roleId && pid){
       const _self = this;

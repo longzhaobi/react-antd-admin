@@ -5,7 +5,6 @@ import { Row, Col } from 'antd';
 import styles from './UIHome.css';
 
 const UIHome = (props) => {
-  console.log(styles);
   return (
     <div className={styles.root}>
       <Row className={styles.row_1}>

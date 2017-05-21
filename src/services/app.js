@@ -11,3 +11,16 @@ export function login(params) {
     data: qs.stringify(params)
   });
 }
+
+export function logout() {
+  return request({
+    url:'/api/logout',
+    method: 'post'
+  });
+}
+
+export function current() {
+  return request({
+    url:'/api/users/current'
+  });
+}

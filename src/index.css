@@ -66,8 +66,8 @@
   }
   :global(.ant-table-footer) {
     text-align: right;
-    line-height: 55px;
-    padding:12px 8px !important;
+    /*line-height: 55px;*/
+    /*padding:12px 8px !important;*/
     height:48px;
     z-index: 3;
     top: 0px !important;
