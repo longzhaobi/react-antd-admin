@@ -2,13 +2,13 @@ import React, {PropTypes} from 'react';
 import {connect} from 'dva';
 import List from './component/List';
 
-import styles from './Log.css';
+import styles from './Session.css';
 
-const Log = ({location, dispatch, children, log, loading}) => {
+const Session = ({location, dispatch, children, session, loading}) => {
 
-  const namespace = 'log';
+  const namespace = 'session';
   const listProps = {
-    ...log,
+    ...session,
     dispatch,
     loading,
     namespace
@@ -23,9 +23,9 @@ const Log = ({location, dispatch, children, log, loading}) => {
 
 function mapStateToProps(state) {
   return {
-    loading: state.loading.models.log,
-    log:state.log
+    loading: state.loading.models.session,
+    session:state.session
   };
 }
 
-export default connect(mapStateToProps)(Log);
+export default connect(mapStateToProps)(Session);

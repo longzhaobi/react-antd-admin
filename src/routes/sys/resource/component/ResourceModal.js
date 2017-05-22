@@ -49,8 +49,8 @@ class RoleModal extends Component {
             dispatch({
               type: `${namespace}/${option}`,
               payload: {...formData, id:record.id_},
-              callback(response) {
-                dispatch({ type: 'app/result',payload:{response, namespace}, onHander() {
+              callback(data) {
+                dispatch({ type: 'app/result',payload:{data, namespace}, onHander() {
                   _self.hideModelHandler();
                 } });
               }
@@ -71,7 +71,7 @@ class RoleModal extends Component {
 
     const permissionOption = [];
     for (let i = 0; i < this.state.permission.length; i++) {
-      permissionOption.push(<Option key={this.state.permission[i].id}>{this.state.permission[i].name}</Option>);
+      permissionOption.push(<Option key={this.state.permission[i].id}>{this.state.permission[i].name}</Option>)
     }
 
     return (

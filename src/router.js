@@ -136,6 +136,15 @@ export default function({ history, app }) {
               cb(null, require('./routes/sys/log/Log'));
             });
           },
+        },{
+          breadcrumbName:"会话管理",
+          path:"/sys/session",
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./routes/sys/session/model/session'));
+              cb(null, require('./routes/sys/session/Session'));
+            });
+          },
         }]
       }]
     },

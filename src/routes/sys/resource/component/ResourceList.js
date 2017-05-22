@@ -153,7 +153,7 @@ const resourceList = ({data, current, total, size, loading, selectedRowKeys, dis
       pagination={false}
       rowSelection={rowSelection}
       size="middle"
-      scroll={{ y: table_height }}
+      scroll={{ y: table_height, x: 1530 }}
       bordered
       rowKey="id_"
       loading={loading}
