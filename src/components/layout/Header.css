@@ -14,6 +14,8 @@
 .right {
   display: flex;
   height:100%;
+  line-height: 50px;
+  padding-right:20px;
 }
 .leaft {
   display: flex;

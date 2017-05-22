@@ -1,8 +1,29 @@
 import React, { Component } from 'react';
-import { Form, Input, Modal, Button, Radio, message, Checkbox, Icon, Row, Col} from 'antd';
+import { Form, Input, Modal, Button, Radio, message, Checkbox, Icon, Row, Col, Upload} from 'antd';
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
+import styles from './UserList.css'
+
+function getBase64(img, callback) {
+  const reader = new FileReader();
+  reader.addEventListener('load', () => callback(reader.result));
+  reader.readAsDataURL(img);
+}
+
+function beforeUpload(file) {
+  const type = file.type
+  if (!type === 'image/png' || !type === 'image/jpeg') {
+    message.error('You can only upload JPG file!');
+    return false
+  }
+  const isLt2M = file.size / 1024 / 1024 < 2;
+  if (!isLt2M) {
+    message.error('Image must smaller than 2MB!');
+  }
+  return isLt2M;
+}
+
 class UserModal extends Component {
 
   constructor(props) {
@@ -10,14 +31,42 @@ class UserModal extends Component {
     this.dispatch = props.dispatch;
     this.state = {
       visible: false,
+      imageUrl:null,
+      avatar:null,
+      uploading:false,
+      uploadIcon: 'plus'
     };
   }
+
+  handleChange = (info) => {
+    const { response, status } = info.file;
+    if (status === 'done') {
+      getBase64(info.file.originFileObj, imageUrl => this.setState({ imageUrl }));
+      let avatar = '';
+      if(response.data.error == "0") {
+        avatar = response.data.url;
+      }
+      this.setState({
+        uploading: false,
+        avatar
+      });
+    } else if ( status === 'uploading') {
+      if(!this.state.uploading) {
+        this.setState({
+          uploading: true,
+          uploadIcon: 'loading'
+        });
+      }
+    }
+  };
 
   showModelHandler = (e) => {
     this.props.form.resetFields();
     if (e) e.stopPropagation();
+    const {record} = this.props;
     this.setState({
       visible: true,
+      avatar: record.avatar
     });
   };
 
@@ -40,7 +89,7 @@ class UserModal extends Component {
             const _self = this;
             dispatch({
               type: `${namespace}/${option}`,
-              payload: {...params, id:record.id_},
+              payload: {...params, id:record.id_, avatar: _self.state.avatar},
               callback(data) {
                 dispatch({ type: 'app/result',payload:{data, namespace}, onHander() {
                   _self.hideModelHandler();
@@ -56,10 +105,13 @@ class UserModal extends Component {
   render() {
     const { children, title, loading, record } = this.props;
     const { getFieldDecorator } = this.props.form;
+    const avatar = this.state.avatar
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },
     };
+
+    const status = loading || this.state.uploading;
 
     return (
       <span>
@@ -75,7 +127,7 @@ class UserModal extends Component {
           footer={[
           <Button key="back" type="ghost" size="large" onClick={this.hideModelHandler}>取消</Button>,
           <Button key="submit" type="primary" size="large" disabled={loading} loading={loading} onClick={this.okHandler}>
-            {loading ? '处理中...' : '确定'}
+            {status ? '处理中...' : '确定'}
           </Button>,
         ]}
         >
@@ -185,6 +237,27 @@ class UserModal extends Component {
                     <Input type="text" placeholder="请输入工作职位" />
                   )}
                 </FormItem>
+
+                <FormItem
+                  {...formItemLayout}
+                  label="用户头像"
+                >
+                  <Upload
+                    className={styles.avatarUploader}
+                    name="uploadFile"
+                    showUploadList={false}
+                    action="api/upload/images"
+                    beforeUpload={beforeUpload}
+                    onChange={this.handleChange}
+                  >
+                    {
+                      avatar ?
+                        <img src={avatar} alt="" className={styles.avatar} /> :
+                        <Icon type={this.state.uploadIcon} className={styles.avatarUploaderTrigger} />
+                    }
+                  </Upload>
+                </FormItem>
+
               </Col>
             </Row>
           </Form>

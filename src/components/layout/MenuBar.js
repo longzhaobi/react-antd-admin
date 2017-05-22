@@ -41,7 +41,7 @@ const MenuBar = ({location,name, subMenu, menuStyle}) => {
   }
 
   return (
-    <div className={cls} style={{height:table_height+142}}>
+    <div className={cls}>
       <div className={styles.menuName}>{name}</div>
       <Menu
           selectedKeys={[getCurrentUrl(location.pathname)]}

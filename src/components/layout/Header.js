@@ -27,7 +27,7 @@ function Header({ location,dispatch, user }) {
         <a className={styles.item}>数据控制台</a>
       </div>
       <div className={styles.right}>
-        <a onClick={logout} className={styles.logout}><Icon style={{marginTop:17}} type="user" />欢迎您-{user.username}</a>
+          <img src={user.avatar} onClick={logout} style={{height:'30px', width: '30px',marginTop:'10px', borderRadius:'50%', cursor:'pointer'}}/>
       </div>
     </div>
   );

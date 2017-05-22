@@ -115,6 +115,13 @@ const UserList = ({data, current, total, size, loading, selectedRowKeys, dispatc
       <span>{index + 1}</span>
     )
   },{
+    title: '头像',
+    dataIndex: 'avatar',
+    width:120,
+    render:(text, record, index) => (
+      <img alt="example" style={{ width: '40px', height: '40px', borderRadius:'50%', cursor: 'pointer' }} src={text} />
+    )
+  },{
     title: '用户名',
     className: 'column-money',
     dataIndex: 'username',
@@ -129,7 +136,7 @@ const UserList = ({data, current, total, size, loading, selectedRowKeys, dispatc
   }, {
     title: '身份证号码',
     dataIndex: 'idcard',
-    width:180,
+    width:180
   }, {
     title: '出生日期',
     dataIndex: 'birthday',
