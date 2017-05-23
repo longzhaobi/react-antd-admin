@@ -24,7 +24,6 @@ export default function request(config = {}) {
   return axios.request(Object.assign(config))
   .then(checkStatus)
   .catch((error) => {
-    console.log(error.response);
     if(!error.response) {
       //假如未定义，说明获取后端网路失败
       Modal.error({
@@ -51,6 +50,7 @@ export default function request(config = {}) {
       return;
     } else {
       message.error(error.toString());
+      // return;
     }
   });
 }

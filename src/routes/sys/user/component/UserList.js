@@ -14,6 +14,24 @@ const UserList = ({data, current, total, size, loading, selectedRowKeys, dispatc
     })
   }
 
+  function lockedHandler(id, locked, idcard) {
+    const params = {
+      id,
+      locked: locked === '0' ? '1' : '0',
+      idcard
+     }
+    const _self = this
+    dispatch({
+      type: `${namespace}/update`,
+      payload: params,
+      callback(data) {
+        dispatch({ type: 'app/result',payload:{data, namespace}, onHander() {
+          _self.hideModelHandler();
+        } });
+      }
+    })
+  }
+
   function onSearch(keyword) {
     if(keyword) {
       dispatch(routerRedux.push({
@@ -104,6 +122,12 @@ const UserList = ({data, current, total, size, loading, selectedRowKeys, dispatc
             <a href="javascript:void(0)">删除</a>
           </Popconfirm>
         </span>) : ''}
+      <span>
+        <span className="ant-divider" />
+        <Popconfirm title="确定要继续吗？" onConfirm={() => lockedHandler(record.id_, record.locked, record.idcard)}>
+          <a href="javascript:void(0)">{record.locked === '1' ? '解锁' : '锁定'}</a>
+        </Popconfirm>
+      </span>
     </div>
   )
 
@@ -158,7 +182,7 @@ const UserList = ({data, current, total, size, loading, selectedRowKeys, dispatc
     dataIndex: 'locked',
     width:80,
     render:(text, record, index) => (
-      <span>{record == '1' ? '已锁住':'未锁住'}</span>
+      <span>{text == '1' ? '已锁住':'未锁住'}</span>
     )
   }, {
     title: '拥有角色',
@@ -175,7 +199,7 @@ const UserList = ({data, current, total, size, loading, selectedRowKeys, dispatc
   },{
     title: '操作',
     key: 'operation',
-    width: 150,
+    width: 180,
     fixed: 'right',
     render: (text, record, index) => toolBar(text, record, index)
   }];

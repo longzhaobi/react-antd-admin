@@ -41,8 +41,6 @@ export default {
         // localStorage.setItem('access_token', o.token);
         // cookie.set('access_token', o.token, {expires: 7});
         yield put(routerRedux.push('/'));
-      } else {
-        message.error(data.msg ? data.msg : '登录失败！');
       }
     },
     *getMenu({payload}, {put, select, call}) {

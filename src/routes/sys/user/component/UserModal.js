@@ -66,6 +66,7 @@ class UserModal extends Component {
     const {record} = this.props;
     this.setState({
       visible: true,
+      uploadIcon: 'plus',
       avatar: record.avatar
     });
   };
