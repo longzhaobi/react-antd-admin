@@ -15,7 +15,7 @@ class Layout extends React.Component {
   render() {
     const {props, children} = this.props
     const {location, dispatch, app, routes} = props
-    const {menuStyle, menu, user} = app;
+    const {menuStyle, menu, user, online} = app;
     const cls = classnames({
       [styles.main]:true,
       [styles.min]:menuStyle === 'min',
@@ -25,7 +25,7 @@ class Layout extends React.Component {
       <div className={styles.normal}>
         <Header location={location} dispatch={dispatch} user = {user}/>
         <div className={styles.content}>
-          <Sidebar location={location} dispatch = {dispatch} menuStyle={menuStyle} routes={routes} menu={menu}/>
+          <Sidebar location={location} dispatch = {dispatch} menuStyle={menuStyle} routes={routes} menu={menu} online={online}/>
           <div className={cls}>
           {children}
           </div>

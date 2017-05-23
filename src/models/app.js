@@ -11,7 +11,7 @@ export default {
     user:{},
     permission:[],
     msg:null,
-
+    online:0,
     //循环删除时，如果为true，则取消删除
     break:false
   },
@@ -94,7 +94,7 @@ export default {
       if(data) {
         yield put({
           type: 'setCurrentUser',
-          payload: data.data
+          payload: {user:data.data, online: data.online}
         });
       }
     }
@@ -113,7 +113,7 @@ export default {
       return {...state, msg:action.payload};
     },
     setCurrentUser(state, action) {
-      return {...state, user: action.payload}
+      return {...state, ...action.payload}
     }
   }
 };
