@@ -85,7 +85,7 @@ export default {
     },
     *logout({payload}, {put, select, call}) {
       const data = yield call(service.logout);
-      yield put(routerRedux.push('/login'));
+      // yield put(routerRedux.push('/login'));
     },
     *current({payload}, {call,put}) {
       const data = yield call(service.current)
