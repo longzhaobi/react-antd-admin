@@ -19,8 +19,10 @@ export default {
     setup({ dispatch, history }) {
       return history.listen(({ pathname, query }) => {
         const path = pathname.split('/')[1];
-        //从本地获取菜单信息
-        dispatch({type:'getMenu',payload:{identity:path,isRoot:pathname === '/' + path}})
+        if(path != 'login') {
+          //从本地获取菜单信息
+          dispatch({type:'getMenu',payload:{identity:path,isRoot:pathname === '/' + path}})
+        }
       });
     }
   },
@@ -35,17 +37,13 @@ export default {
         localStorage.setItem('has_roles', o.hasRoles);
         //设置菜单信息到本地
         localStorage.setItem('has_menus', JSON.stringify(o.hasMenus));
-        //设置用户信息到本地
-        // localStorage.setItem('current_user', JSON.stringify(o.sysUser));
-        //保存token
-        // localStorage.setItem('access_token', o.token);
-        // cookie.set('access_token', o.token, {expires: 7});
+        cookie.set('token', o.token, {expires: 7});
         yield put(routerRedux.push('/'));
       }
     },
     *getMenu({payload}, {put, select, call}) {
       const menus = localStorage.getItem('has_menus');
-      if(menus) {
+      if(menus && menus !== 'undefined') {
         const hasMenus = JSON.parse(menus);
         const {identity} = payload;
         yield put({type:'queryMenuSuccess',payload:hasMenus});
