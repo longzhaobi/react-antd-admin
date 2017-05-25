@@ -1,11 +1,11 @@
 import React, {PropTypes} from 'react';
 import { routerRedux } from 'dva/router';
-import {Table, Select, Input, Alert, Button, Pagination, Row, Col, Popconfirm, Icon, Tooltip, message} from 'antd';
+import {Table, Select, Input, Alert, Button, Pagination, Row, Col, Popconfirm, Icon, Tooltip, message, Badge} from 'antd';
 import styles from './List.css';
 const Option = Select.Option;
 const Search = Input.Search;
 const List = ({data, current, total, size, loading, selectedRowKeys, dispatch, namespace, keyword}) => {
-  function removeHandler(params) {
+  function removeOnlineHandler(params) {
     dispatch({
       type:`${namespace}/remove`,
       payload:params
@@ -79,7 +79,7 @@ const List = ({data, current, total, size, loading, selectedRowKeys, dispatch, n
     <div>
       {isAuth('session:remove') ? (
         <span>
-          <Popconfirm title="确定要删除吗？" onConfirm={() => removeHandler({id:record.id_})}>
+          <Popconfirm title="确定要删除吗？" onConfirm={() => removeOnlineHandler({token:record.sessionId})}>
             <a href="javascript:void(0)">强制下线</a>
           </Popconfirm>
         </span>) : ''}
@@ -92,6 +92,17 @@ const List = ({data, current, total, size, loading, selectedRowKeys, dispatch, n
     width:50,
     render:(text, record, index) => (
       <span>{index + 1}</span>
+    )
+  },{
+    title: '状态',
+    dataIndex: 'online',
+    width:100,
+    render: (text, record, index) =>(
+      <div>
+      {
+        text == '1' ? <Badge status="success" text="在线"/>: <Badge status="default" text="离线"/>
+      }
+      </div>
     )
   },{
     title: '会话ID',
