@@ -111,6 +111,15 @@
     color:#efefef;
   }
 
+  :global(.ant-dropdown-link) {
+    color:#fff;
+    margin-left:10px;
+  }
+
+  :global(.info-modal) :global(.ant-modal-body) {
+    padding:0px;
+  }
+
 
 //markdown样式修饰
   :global(pre) {
