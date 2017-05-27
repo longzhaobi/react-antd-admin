@@ -1,7 +1,7 @@
 .normal {
   position: fixed;
   display: flex;
-  justify-content: space-between;//两端对齐
+  justify-content: space-between;
   height:50px;
   background-color: #0099CC;
   top:0px;
@@ -27,8 +27,8 @@
 
 .logout {
   display: flex;
-  justify-content: center;//定义主轴上对齐方式
-  align-items: center;//定义交叉轴上对齐方式
+  justify-content: center;
+  align-items: center;
   height:50px;
   line-height: 50px;
   width:180px;

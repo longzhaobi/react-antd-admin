@@ -47,7 +47,9 @@ function Header({ location,dispatch, user }) {
         <a className={styles.item}>数据控制台</a>
       </div>
       <div className={styles.right}>
-          <img src={user.avatar} style={{height:'30px', width: '30px',marginTop:'10px', borderRadius:'50%', cursor:'pointer'}}/>
+          <InfoModal user={user}>
+            <img src={user.avatar} style={{height:'30px', width: '30px',marginTop:'10px', borderRadius:'50%', cursor:'pointer'}}/>
+          </InfoModal>
           <Dropdown overlay={menu} trigger={['click']}>
             <a className="ant-dropdown-link" href="#">
               {user.username} <Icon type="down" />

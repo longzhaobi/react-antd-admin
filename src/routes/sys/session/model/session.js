@@ -48,19 +48,9 @@ export default {
         });
       }
     },
-    *remove({ payload }, { call, put, select }) {
-      let data;
-      if(payload instanceof Array) {
-        const size = payload.length;
-        for(let i = 0; i < size; i++) {
-          data = yield call(service.remove, payload[i]);
-          if(data) {
-            message.success( `第${i+1}条删除成功`);
-          }
-        }
-      } else {
-        data = yield call(service.remove, payload.id);
-      }
+    *remove({ payload: {token} }, { call, put, select }) {
+      console.log(token)
+      const data = yield call(service.remove, token);
       yield put({ type: 'app/result',payload:{data, namespace:'session'} });
     },
     *update({ payload:params, callback }, { call, put }) {

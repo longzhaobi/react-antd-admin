@@ -4,12 +4,17 @@ import {Table, Select, Input, Alert, Button, Pagination, Row, Col, Popconfirm, I
 import styles from './List.css';
 const Option = Select.Option;
 const Search = Input.Search;
-const List = ({data, current, total, size, loading, selectedRowKeys, dispatch, namespace, keyword}) => {
-  function removeOnlineHandler(params) {
-    dispatch({
+const List = ({data, current, total, size, loading, selectedRowKeys, dispatch, namespace, keyword, user}) => {
+  function removeOnlineHandler(record) {
+    if(record.online == '0') {
+      message.warn("此用户已处于离线状态");
+    } else {
+      dispatch({
       type:`${namespace}/remove`,
-      payload:params
+      payload:{token: record.sessionId}
     })
+    }
+    
   }
 
   function onSearch(keyword) {
@@ -41,7 +46,7 @@ const List = ({data, current, total, size, loading, selectedRowKeys, dispatch, n
         showSizeChanger
         onShowSizeChange={onChange}
         onChange={onChange}
-      />)
+      />);
   }
   // const hasSelected = selectedRowKeys.length > 0;
 
@@ -79,8 +84,8 @@ const List = ({data, current, total, size, loading, selectedRowKeys, dispatch, n
     <div>
       {isAuth('session:remove') ? (
         <span>
-          <Popconfirm title="确定要删除吗？" onConfirm={() => removeOnlineHandler({token:record.sessionId})}>
-            <a href="javascript:void(0)">强制下线</a>
+          <Popconfirm title="确定要删除吗？" onConfirm={() => removeOnlineHandler(record)}>
+            <a href="javascript:void(0)" disabled={ record.userId === user.id || record.online == '0'}>强制下线</a>
           </Popconfirm>
         </span>) : ''}
     </div>
@@ -121,10 +126,6 @@ const List = ({data, current, total, size, loading, selectedRowKeys, dispatch, n
     dataIndex: 'startTime',
     width:340,
   }, {
-    title: '备注',
-    dataIndex: 'remark',
-    // width:180,
-  }, {
     title: '创建日期',
     dataIndex: 'ctime',
     width:180
@@ -147,7 +148,7 @@ const List = ({data, current, total, size, loading, selectedRowKeys, dispatch, n
       pagination={false}
       rowSelection={rowSelection}
       size="middle"
-      scroll={{ y: table_height, x:2500 }}
+      scroll={{ y: table_height, x:1670 }}
       bordered
       rowKey="id_"
       loading={loading}
