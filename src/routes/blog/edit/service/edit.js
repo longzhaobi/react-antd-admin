@@ -3,13 +3,13 @@ import qs from 'qs';
 
 export async function fetch(id) {
   return request({
-    url:`/api/anon/articles/${id}`
+    url:`/blog/anon/articles/${id}`
   });
 }
 
 export async function update(params) {
   return request({
-    url:'/api/articles',
+    url:'/blog/articles',
     method:'put',
     data:qs.stringify(params)
   });
@@ -18,6 +18,6 @@ export async function update(params) {
 
 export async function fetchClassifications() {
   return request({
-    url:'/api/anon/all/classifications'
+    url:'/blog/anon/all/classifications'
   });
 }

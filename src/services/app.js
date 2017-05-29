@@ -6,7 +6,7 @@ export async function query() {
 
 export function login(params) {
   return request({
-    url:'/api/login',
+    url:'/sys/login',
     method: 'post',
     data: qs.stringify(params)
   });
@@ -14,13 +14,13 @@ export function login(params) {
 
 export function logout() {
   return request({
-    url:'/api/logout',
+    url:'/sys/logout',
     method: 'post'
   });
 }
 
 export function current() {
   return request({
-    url:'/api/users/current'
+    url:'/sys/users/current'
   });
 }

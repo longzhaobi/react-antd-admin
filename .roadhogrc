@@ -11,10 +11,15 @@
   },
   "autoprefixer": null,
   "proxy": {
-    "/api": {
-      "target": "http://localhost:8188",
+    "/sys": {
+      "target": "http://localhost:88",
       "changeOrigin": true,
-      "pathRewrite": { "^/api" : "/" }
+      "pathRewrite": { "^/sys" : "/" }
+    },
+    "/blog": {
+      "target": "http://localhost:87",
+      "changeOrigin": true,
+      "pathRewrite": { "^/blog" : "/" }
     }
   },
   "extraBabelPlugins": [
