@@ -47,12 +47,12 @@ class InfoModal extends Component {
           width={360}
           footer={null}
           onOk={this.okHandler}
-          onCancel={this.hideModelHandler} 
+          onCancel={this.hideModelHandler}
           className="info-modal"
         >
           <Card style={{ width: 360 }} bodyStyle={{ padding: 0 }}>
             <div className="custom-image">
-              <img alt="example" width="100%" height="360px" src={user.avatar} />
+              <img alt="example" width="100%" height="300px" src={user.avatar} />
             </div>
             <div style={{width:'100%',textAlign:'center',height:40}}>
               <h2 style={{margin:'0 auto'}}>{user.username}</h2>

@@ -10,7 +10,7 @@ class Layout extends React.Component {
   }
   componentWillMount() {
     //去后端请求获取用户信息
-    // this.props.props.dispatch({type:'app/current'})
+    this.props.props.dispatch({type:'app/current'})
   }
   render() {
     const {props, children} = this.props

@@ -12,12 +12,12 @@
   "autoprefixer": null,
   "proxy": {
     "/sys": {
-      "target": "http://localhost:88",
+      "target": "http://localhost:1088",
       "changeOrigin": true,
       "pathRewrite": { "^/sys" : "/" }
     },
     "/blog": {
-      "target": "http://localhost:87",
+      "target": "http://localhost:1087",
       "changeOrigin": true,
       "pathRewrite": { "^/blog" : "/" }
     }
